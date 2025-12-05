@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>कुंडली मिलन अहवाल - Kundali Matching Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .person-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2563eb;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">कुंडली मिलन अहवाल - Kundali Matching Report</h2>
+
+    <form action="/generate-pdf/" method="POST" class="card p-4 shadow">
+        {% csrf_token %}
+        
+        <!-- Person 1 Details -->
+        <div class="person-section">
+            <h4 class="section-title">पहिला व्यक्ती - Person 1 Details</h4>
+            
+            <div class="mb-3">
+                <label class="form-label">नाव / Name</label>
+                <input type="text" name="person1_name" class="form-control" placeholder="यश पाठक" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">जन्म तारीख / Date of Birth</label>
+                <input type="date" name="person1_dob" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">जन्म वेळ / Birth Time</label>
+                <input type="time" name="person1_birth_time" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">जन्म स्थळ / Birth Place</label>
+                <input type="text" name="person1_birth_place" class="form-control" placeholder="नवी दिल्ली, भारत" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">राशी / Zodiac Sign (Rashi)</label>
+                <select name="person1_rashi" class="form-control" required>
+                    <option value="">Select Rashi</option>
+                    <option value="मेष">मेष (Aries)</option>
+                    <option value="वृषभ">वृषभ (Taurus)</option>
+                    <option value="मिथुन">मिथुन (Gemini)</option>
+                    <option value="कर्क">कर्क (Cancer)</option>
+                    <option value="सिंह">सिंह (Leo)</option>
+                    <option value="कन्या">कन्या (Virgo)</option>
+                    <option value="तुला">तुला (Libra)</option>
+                    <option value="वृश्चिक">वृश्चिक (Scorpio)</option>
+                    <option value="धनु">धनु (Sagittarius)</option>
+                    <option value="मकर">मकर (Capricorn)</option>
+                    <option value="कुंभ">कुंभ (Aquarius)</option>
+                    <option value="मीन">मीन (Pisces)</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">नक्षत्र / Nakshatra</label>
+                <input type="text" name="person1_nakshatra" class="form-control" placeholder="पूर्व भाद्रपद" required>
+            </div>
+        </div>
+
+        <!-- Person 2 Details -->
+        <div class="person-section">
+            <h4 class="section-title">दुसरी व्यक्ती - Person 2 Details</h4>
+            
+            <div class="mb-3">
+                <label class="form-label">नाव / Name</label>
+                <input type="text" name="person2_name" class="form-control" placeholder="सुमा" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">जन्म तारीख / Date of Birth</label>
+                <input type="date" name="person2_dob" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">जन्म वेळ / Birth Time</label>
+                <input type="time" name="person2_birth_time" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">जन्म स्थळ / Birth Place</label>
+                <input type="text" name="person2_birth_place" class="form-control" placeholder="नवी दिल्ली, भारत" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">राशी / Zodiac Sign (Rashi)</label>
+                <select name="person2_rashi" class="form-control" required>
+                    <option value="">Select Rashi</option>
+                    <option value="मेष">मेष (Aries)</option>
+                    <option value="वृषभ">वृषभ (Taurus)</option>
+                    <option value="मिथुन">मिथुन (Gemini)</option>
+                    <option value="कर्क">कर्क (Cancer)</option>
+                    <option value="सिंह">सिंह (Leo)</option>
+                    <option value="कन्या">कन्या (Virgo)</option>
+                    <option value="तुला">तुला (Libra)</option>
+                    <option value="वृश्चिक">वृश्चिक (Scorpio)</option>
+                    <option value="धनु">धनु (Sagittarius)</option>
+                    <option value="मकर">मकर (Capricorn)</option>
+                    <option value="कुंभ">कुंभ (Aquarius)</option>
+                    <option value="मीन">मीन (Pisces)</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">नक्षत्र / Nakshatra</label>
+                <input type="text" name="person2_nakshatra" class="form-control" placeholder="अनुराधा" required>
+            </div>
+        </div>
+
+        <!-- Guna Score Section -->
+        <div class="person-section">
+            <h4 class="section-title">गुण मिलन / Guna Matching Score</h4>
+            
+            <div class="mb-3">
+                <label class="form-label">एकूण गुण / Total Score (out of 36)</label>
+                <input type="number" name="guna_score" class="form-control" min="0" max="36" placeholder="25" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">सारांश / Summary</label>
+                <textarea name="summary" class="form-control" rows="4" placeholder="हा कुंडली मिलन अहवाल वैदिक ज्योतिषाच्या अष्टकूट पद्धतीवर आधारित आहे..."></textarea>
+            </div>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2">Generate PDF / PDF तयार करा</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कुंडली मिलन अहवाल</title>
+    <style>
+        /* PDF-OPTIMIZED STYLES */
+        @page {
+            size: A4;
+            margin: 0.8cm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        body {
+            font-family: 'Noto Sans Devanagari', 'Segoe UI', 'Nirmala UI', sans-serif;
+            line-height: 1.3;
+            color: #000;
+            background: #fff;
+            width: 100%;
+            max-width: 21cm;
+            margin: 0 auto;
+            font-size: 10pt;
+        }
+        
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 12pt 0;
+            border-bottom: 1.5pt solid #2563eb;
+            margin-bottom: 16pt;
+        }
+        
+        .header h1 {
+            font-size: 18pt;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 4pt;
+        }
+        
+        .header .subtitle {
+            font-size: 11pt;
+            color: #666;
+        }
+        
+        /* COUPLE NAMES */
+        .couple-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .person-box {
+            flex: 1;
+            text-align: center;
+            padding: 12pt;
+            border: 1pt solid #e5e7eb;
+            border-radius: 4pt;
+            background: #f9fafb;
+        }
+        
+        .person-name {
+            font-size: 14pt;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 4pt;
+        }
+        
+        .person-rashi {
+            font-size: 10pt;
+            color: #6b7280;
+        }
+        
+        .heart-symbol {
+            padding: 0 20pt;
+            color: #dc2626;
+            font-size: 14pt;
+        }
+        
+        /* DETAILS SECTION - PDF OPTIMIZED */
+        .details-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16pt;
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .details-card {
+            border: 0.75pt solid #d1d5db;
+            border-radius: 4pt;
+            padding: 14pt;
+            background: #fff;
+        }
+        
+        .card-title {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 10pt;
+            padding-bottom: 6pt;
+            border-bottom: 0.75pt solid #e5e7eb;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 8pt;
+            min-height: 18pt;
+        }
+        
+        .detail-label {
+            flex: 0 0 90pt;
+            font-weight: 500;
+            color: #4b5563;
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #111827;
+        }
+        
+        /* GUNA SCORE - SIMPLE DESIGN */
+        .guna-score-section {
+            text-align: center;
+            margin: 24pt 0;
+            padding: 16pt;
+            border: 0.75pt solid #d1d5db;
+            border-radius: 4pt;
+            background: #f8fafc;
+            page-break-inside: avoid;
+        }
+        
+        .score-circle {
+            width: 100pt;
+            height: 100pt;
+            border-radius: 50%;
+            background: conic-gradient(#10b981 0deg 250deg, #f59e0b 250deg 310deg, #ef4444 310deg 360deg);
+            margin: 0 auto 12pt;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .score-inner {
+            width: 70pt;
+            height: 70pt;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1pt solid #e5e7eb;
+        }
+        
+        .score-value {
+            font-size: 22pt;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1;
+        }
+        
+        .score-total {
+            font-size: 10pt;
+            color: #6b7280;
+            margin-top: 2pt;
+        }
+        
+        .match-text {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #2563eb;
+            margin: 6pt 0;
+        }
+        
+        .match-desc {
+            font-size: 10pt;
+            color: #4b5563;
+            max-width: 400pt;
+            margin: 0 auto;
+        }
+        
+        /* SUMMARY SECTION */
+        .summary-section {
+            margin: 20pt 0;
+            padding: 14pt;
+            border: 0.75pt solid #d1d5db;
+            border-radius: 4pt;
+            background: #fff;
+            page-break-inside: avoid;
+        }
+        
+        .summary-title {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 8pt;
+        }
+        
+        .summary-content {
+            font-size: 10pt;
+            color: #374151;
+            line-height: 1.4;
+            text-align: justify;
+        }
+        
+        /* GUNA TABLE */
+        .guna-table-section {
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .guna-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+        }
+        
+        .guna-table th {
+            background: #2563eb;
+            color: white;
+            padding: 8pt;
+            text-align: left;
+            font-weight: 600;
+            border: 0.75pt solid #2563eb;
+        }
+        
+        .guna-table td {
+            padding: 6pt 8pt;
+            border: 0.75pt solid #d1d5db;
+        }
+        
+        .guna-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        
+        /* FOOTER */
+        .footer {
+            margin-top: 24pt;
+            padding-top: 12pt;
+            border-top: 0.75pt solid #d1d5db;
+            color: #6b7280;
+            font-size: 9pt;
+            text-align: center;
+        }
+        
+        /* PRINT BUTTON - VISIBLE ONLY ON SCREEN */
+        .print-button {
+            text-align: center;
+            margin: 20pt 0;
+        }
+        
+        .print-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8pt 16pt;
+            border-radius: 4pt;
+            font-size: 10pt;
+            cursor: pointer;
+        }
+        
+        /* PRINT SPECIFIC STYLES */
+        @media print {
+            body {
+                font-size: 10pt;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .print-button {
+                display: none;
+            }
+            
+            .details-section {
+                gap: 12pt;
+            }
+            
+            .person-box {
+                padding: 8pt;
+            }
+            
+            .score-circle {
+                width: 90pt;
+                height: 90pt;
+            }
+            
+            .score-inner {
+                width: 65pt;
+                height: 65pt;
+            }
+            
+            .score-value {
+                font-size: 20pt;
+            }
+            
+            /* Ensure no page breaks in critical sections */
+            .couple-section,
+            .guna-score-section,
+            .guna-table-section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* RESPONSIVE FOR SCREEN */
+        @media screen {
+            body {
+                padding: 20pt;
+                max-width: 21cm;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                margin: 20pt auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>कुंडली मिलन अहवाल</h1>
+        <div class="subtitle">अष्टकूट गुण मिलन - वैदिक ज्योतिष</div>
+    </div>
+    
+    <div class="couple-section">
+        <div class="person-box">
+            <div class="person-name">{{ person1_name }}</div>
+            <div class="person-rashi">{{ person1_rashi }} राशी</div>
+        </div>
+        
+        <div class="heart-symbol">♥</div>
+        
+        <div class="person-box">
+            <div class="person-name">{{ person2_name }}</div>
+            <div class="person-rashi">{{ person2_rashi }} राशी</div>
+        </div>
+    </div>
+    
+    <div class="details-section">
+        <div class="details-card">
+            <div class="card-title">{{ person1_name }} - तपशील</div>
+            <div class="detail-row">
+                <div class="detail-label">जन्म तारीख:</div>
+                <div class="detail-value">{{ person1_dob }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">जन्म वेळ:</div>
+                <div class="detail-value">{{ person1_birth_time }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">जन्म स्थळ:</div>
+                <div class="detail-value">{{ person1_birth_place }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">राशी:</div>
+                <div class="detail-value">{{ person1_rashi }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">नक्षत्र:</div>
+                <div class="detail-value">{{ person1_nakshatra }}</div>
+            </div>
+        </div>
+        
+        <div class="details-card">
+            <div class="card-title">{{ person2_name }} - तपशील</div>
+            <div class="detail-row">
+                <div class="detail-label">जन्म तारीख:</div>
+                <div class="detail-value">{{ person2_dob }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">जन्म वेळ:</div>
+                <div class="detail-value">{{ person2_birth_time }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">जन्म स्थळ:</div>
+                <div class="detail-value">{{ person2_birth_place }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">राशी:</div>
+                <div class="detail-value">{{ person2_rashi }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">नक्षत्र:</div>
+                <div class="detail-value">{{ person2_nakshatra }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="guna-score-section">
+        <div class="score-circle">
+            <div class="score-inner">
+                <div class="score-value">{{ guna_score }}</div>
+                <div class="score-total">३६ पैकी</div>
+            </div>
+        </div>
+        <div class="match-text">
+            {% if guna_score|add:"0" >= 25 %}
+                चांगला जोडी
+            {% elif guna_score|add:"0" >= 18 %}
+                मध्यम जोडी
+            {% else %}
+                कमी सुसंगतता
+            {% endif %}
+        </div>
+        <div class="match-desc">
+            अष्टकूट पद्धतीनुसार ३६ पैकी {{ guna_score }} गुण प्राप्त. 
+            {% if guna_score|add:"0" >= 25 %}
+                हा स्कोअर चांगल्या सुसंगततेचे सूचक आहे.
+            {% elif guna_score|add:"0" >= 18 %}
+                हा स्कोअर मध्यम सुसंगततेचे सूचक आहे.
+            {% else %}
+                हा स्कोअर कमी सुसंगततेचे सूचक आहे.
+            {% endif %}
+        </div>
+    </div>
+    
+    
+    <div class="summary-section">
+        <div class="summary-title">सारांश</div>
+        <div class="summary-content">
+            <p>{{ summary|default:"हा कुंडली मिलन अहवाल वैदिक ज्योतिषाच्या अष्टकूट पद्धतीवर आधारित आहे. या जोडीमध्ये परस्पर समज, आदर आणि भावनिक जोडणी निर्माण होण्याची शक्यता आहे." }}</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div>अहवाल तयार दिनांक: <span id="current-date"></span></div>
+        <div style="margin-top: 4pt;">हा अहवाल माहितीच्या हेतूने तयार केला आहे. अंतिम निर्णयापूर्वी पंडितांचा सल्ला घ्यावा.</div>
+    </div>
+    
+    <div class="print-button">
+        <button class="print-btn" onclick="window.print()">PDF / प्रिंट करा</button>
+    </div>
+
+    <script>
+        // Set current date in Marathi
+        document.addEventListener('DOMContentLoaded', function() {
+            const date = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const marathiDate = date.toLocaleDateString('mr-IN', options);
+            document.getElementById('current-date').textContent = marathiDate;
+        });
+        
+        // Add print styles for better PDF output
+        const style = document.createElement('style');
+        style.textContent = `
+            @media print {
+                * {
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                body {
+                    width: 100%;
+                    margin: 0;
+                    padding: 0.8cm;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
