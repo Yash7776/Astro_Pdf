@@ -1,257 +1,470 @@
 <!DOCTYPE html>
-<html>
+<html lang="mr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>कुंडली मिलन अहवाल - Kundali Matching Report</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .person-section {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .section-title {
-            color: #2563eb;
+
+        body {
+            font-family: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .persons-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .person-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e0e7ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .person-card.person1 {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .person-card.person2 {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        .person-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(255,255,255,0.5);
+        }
+
+        .person-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .person-header .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
             font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #2563eb;
+            color: #334155;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        .guna-section {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 2px solid #f39c12;
+        }
+
+        .guna-section h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 992px) {
+            .persons-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header-section h1 {
+                font-size: 2rem;
+            }
+
+            .form-card {
+                padding: 25px;
+            }
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 20px;
+            position: relative;
+            font-size: 2rem;
+            color: #e11d48;
         }
     </style>
 </head>
-
-<body class="bg-light">
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">कुंडली मिलन अहवाल - Kundali Matching Report</h2>
-
-    <form action="/generate-pdf/" method="POST" class="card p-4 shadow">
-        {% csrf_token %}
-        
-        <!-- Person 1 Details -->
-        <div class="person-section">
-            <h4 class="section-title">पहिला व्यक्ती - Person 1 Details</h4>
-            
-            <div class="mb-3">
-                <label class="form-label">नाव / Name</label>
-                <input type="text" name="person1_name" class="form-control" placeholder="यश पाठक" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">जन्म तारीख / Date of Birth</label>
-                <input type="date" name="person1_dob" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">जन्म वेळ / Birth Time</label>
-                <input type="time" name="person1_birth_time" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">जन्म स्थळ / Birth Place</label>
-                <input type="text" name="person1_birth_place" class="form-control" placeholder="नवी दिल्ली, भारत" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">राशी / Zodiac Sign (Rashi)</label>
-                <select name="person1_rashi" class="form-control" required>
-                    <option value="">Select Rashi</option>
-                    <option value="मेष">मेष (Aries)</option>
-                    <option value="वृषभ">वृषभ (Taurus)</option>
-                    <option value="मिथुन">मिथुन (Gemini)</option>
-                    <option value="कर्क">कर्क (Cancer)</option>
-                    <option value="सिंह">सिंह (Leo)</option>
-                    <option value="कन्या">कन्या (Virgo)</option>
-                    <option value="तुला">तुला (Libra)</option>
-                    <option value="वृश्चिक">वृश्चिक (Scorpio)</option>
-                    <option value="धनु">धनु (Sagittarius)</option>
-                    <option value="मकर">मकर (Capricorn)</option>
-                    <option value="कुंभ">कुंभ (Aquarius)</option>
-                    <option value="मीन">मीन (Pisces)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">नक्षत्र / Nakshatra</label>
-                <input type="text" name="person1_nakshatra" class="form-control" placeholder="पूर्व भाद्रपद" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">चरण / Charan (Pada)</label>
-                <select name="person1_charan" class="form-control" required>
-                    <option value="">Select Charan</option>
-                    <option value="पहिले">पहिले (First)</option>
-                    <option value="दुसरे">दुसरे (Second)</option>
-                    <option value="तिसरे">तिसरे (Third)</option>
-                    <option value="चौथे">चौथे (Fourth)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">वर्ग / Varga (Class)</label>
-                <input type="text" name="person1_varga" class="form-control" placeholder="सर्प" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">योणी / Yoni</label>
-                <input type="text" name="person1_yoni" class="form-control" placeholder="हत्ती" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">नाडी / Nadi</label>
-                <select name="person1_nadi" class="form-control" required>
-                    <option value="">Select Nadi</option>
-                    <option value="आदि">आदि (Adi)</option>
-                    <option value="मध्य">मध्य (Madhya)</option>
-                    <option value="अंत्य">अंत्य (Antya)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">गण / Gan</label>
-                <select name="person1_gan" class="form-control" required>
-                    <option value="">Select Gan</option>
-                    <option value="देव">देव (Dev)</option>
-                    <option value="मनुष्य">मनुष्य (Manushya)</option>
-                    <option value="राक्षस">राक्षस (Rakshasa)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">गुरु / Guru (Jupiter Position)</label>
-                <input type="text" name="person1_guru" class="form-control" placeholder="पहिला" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">मगळ-दोष / Mangal Dosh</label>
-                <select name="person1_mangal_dosh" class="form-control" required>
-                    <option value="">Select</option>
-                    <option value="नाही">नाही (No)</option>
-                    <option value="आहे">आहे (Yes)</option>
-                </select>
-            </div>
+<body>
+    <div class="main-container">
+        <div class="header-section">
+            <h1>🕉️ कुंडली मिलन अहवाल 🕉️</h1>
+            <p>Kundali Matching Report - वैदिक ज्योतिष पद्धती</p>
         </div>
 
-        <!-- Person 2 Details -->
-        <div class="person-section">
-            <h4 class="section-title">दुसरी व्यक्ती - Person 2 Details</h4>
+        <form action="/generate-pdf/" method="POST" class="form-card">
+            {% csrf_token %}
             
-            <div class="mb-3">
-                <label class="form-label">नाव / Name</label>
-                <input type="text" name="person2_name" class="form-control" placeholder="सुमा" required>
+            <div class="persons-container">
+                <!-- Person 1 -->
+                <div class="person-card person1">
+                    <div class="person-header">
+                        <div class="icon">👨</div>
+                        <h3>पहिला व्यक्ती / Person 1</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">नाव / Name</label>
+                        <input type="text" name="person1_name" class="form-control" placeholder="माधव" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">जन्म तारीख / Date of Birth</label>
+                        <input type="date" name="person1_dob" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">जन्म वेळ / Birth Time</label>
+                        <input type="time" name="person1_birth_time" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">जन्म स्थळ / Birth Place</label>
+                        <input type="text" name="person1_birth_place" class="form-control" placeholder="मुंबई, महाराष्ट्र" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">राशी / Zodiac Sign (Rashi)</label>
+                        <select name="person1_rashi" class="form-select" required>
+                            <option value="">राशी निवडा / Select Rashi</option>
+                            <option value="मेष">मेष (Aries)</option>
+                            <option value="वृषभ">वृषभ (Taurus)</option>
+                            <option value="मिथुन">मिथुन (Gemini)</option>
+                            <option value="कर्क">कर्क (Cancer)</option>
+                            <option value="सिंह">सिंह (Leo)</option>
+                            <option value="कन्या">कन्या (Virgo)</option>
+                            <option value="तुला">तुला (Libra)</option>
+                            <option value="वृश्चिक">वृश्चिक (Scorpio)</option>
+                            <option value="धनु">धनु (Sagittarius)</option>
+                            <option value="मकर">मकर (Capricorn)</option>
+                            <option value="कुंभ">कुंभ (Aquarius)</option>
+                            <option value="मीन">मीन (Pisces)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">नक्षत्र / Nakshatra</label>
+                        <input type="text" name="person1_nakshatra" class="form-control" placeholder="रोहिणी" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">चरण / Charan (Pada)</label>
+                        <select name="person1_charan" class="form-select" required>
+                            <option value="">चरण निवडा / Select Charan</option>
+                            <option value="पहिले">पहिले (First)</option>
+                            <option value="दुसरे">दुसरे (Second)</option>
+                            <option value="तिसरे">तिसरे (Third)</option>
+                            <option value="चौथे">चौथे (Fourth)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">वर्ग / Varga (Class)</label>
+                        <input type="text" name="person1_varga" class="form-control" placeholder="सर्प" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">योणी / Yoni</label>
+                        <input type="text" name="person1_yoni" class="form-control" placeholder="सिंह" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">नाडी / Nadi</label>
+                        <select name="person1_nadi" class="form-select" required>
+                            <option value="">नाडी निवडा / Select Nadi</option>
+                            <option value="आदि">आदि (Adi)</option>
+                            <option value="मध्य">मध्य (Madhya)</option>
+                            <option value="अंत्य">अंत्य (Antya)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">गण / Gan</label>
+                        <select name="person1_gan" class="form-select" required>
+                            <option value="">गण निवडा / Select Gan</option>
+                            <option value="देव">देव (Dev)</option>
+                            <option value="मनुष्य">मनुष्य (Manushya)</option>
+                            <option value="राक्षस">राक्षस (Rakshasa)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">गुरु / Guru (Jupiter Position)</label>
+                        <input type="text" name="person1_guru" class="form-control" placeholder="पहिला" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">मगळ-दोष / Mangal Dosh</label>
+                        <select name="person1_mangal_dosh" class="form-select" required>
+                            <option value="">निवडा / Select</option>
+                            <option value="नाही">नाही (No)</option>
+                            <option value="आहे">आहे (Yes)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Person 2 -->
+                <div class="person-card person2">
+                    <div class="person-header">
+                        <div class="icon">👩</div>
+                        <h3>दुसरी व्यक्ती / Person 2</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">नाव / Name</label>
+                        <input type="text" name="person2_name" class="form-control" placeholder="दोमता" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">जन्म तारीख / Date of Birth</label>
+                        <input type="date" name="person2_dob" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">जन्म वेळ / Birth Time</label>
+                        <input type="time" name="person2_birth_time" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">जन्म स्थळ / Birth Place</label>
+                        <input type="text" name="person2_birth_place" class="form-control" placeholder="पुणे, महाराष्ट्र" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">राशी / Zodiac Sign (Rashi)</label>
+                        <select name="person2_rashi" class="form-select" required>
+                            <option value="">राशी निवडा / Select Rashi</option>
+                            <option value="मेष">मेष (Aries)</option>
+                            <option value="वृषभ">वृषभ (Taurus)</option>
+                            <option value="मिथुन">मिथुन (Gemini)</option>
+                            <option value="कर्क">कर्क (Cancer)</option>
+                            <option value="सिंह">सिंह (Leo)</option>
+                            <option value="कन्या">कन्या (Virgo)</option>
+                            <option value="तुला">तुला (Libra)</option>
+                            <option value="वृश्चिक">वृश्चिक (Scorpio)</option>
+                            <option value="धनु">धनु (Sagittarius)</option>
+                            <option value="मकर">मकर (Capricorn)</option>
+                            <option value="कुंभ">कुंभ (Aquarius)</option>
+                            <option value="मीन">मीन (Pisces)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">नक्षत्र / Nakshatra</label>
+                        <input type="text" name="person2_nakshatra" class="form-control" placeholder="अश्विनी" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">चरण / Charan (Pada)</label>
+                        <select name="person2_charan" class="form-select" required>
+                            <option value="">चरण निवडा / Select Charan</option>
+                            <option value="पहिले">पहिले (First)</option>
+                            <option value="दुसरे">दुसरे (Second)</option>
+                            <option value="तिसरे">तिसरे (Third)</option>
+                            <option value="चौथे">चौथे (Fourth)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">वर्ग / Varga (Class)</label>
+                        <input type="text" name="person2_varga" class="form-control" placeholder="सर्प" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">योणी / Yoni</label>
+                        <input type="text" name="person2_yoni" class="form-control" placeholder="हत्ती" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">नाडी / Nadi</label>
+                        <select name="person2_nadi" class="form-select" required>
+                            <option value="">नाडी निवडा / Select Nadi</option>
+                            <option value="आदि">आदि (Adi)</option>
+                            <option value="मध्य">मध्य (Madhya)</option>
+                            <option value="अंत्य">अंत्य (Antya)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">गण / Gan</label>
+                        <select name="person2_gan" class="form-select" required>
+                            <option value="">गण निवडा / Select Gan</option>
+                            <option value="देव">देव (Dev)</option>
+                            <option value="मनुष्य">मनुष्य (Manushya)</option>
+                            <option value="राक्षस">राक्षस (Rakshasa)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">गुरु / Guru (Jupiter Position)</label>
+                        <input type="text" name="person2_guru" class="form-control" placeholder="पहिला" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">मगळ-दोष / Mangal Dosh</label>
+                        <select name="person2_mangal_dosh" class="form-select" required>
+                            <option value="">निवडा / Select</option>
+                            <option value="नाही">नाही (No)</option>
+                            <option value="आहे">आहे (Yes)</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">जन्म तारीख / Date of Birth</label>
-                <input type="date" name="person2_dob" class="form-control" required>
+            <div class="divider">
+                <span>♥</span>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">जन्म वेळ / Birth Time</label>
-                <input type="time" name="person2_birth_time" class="form-control" required>
+            <!-- Guna Score Section -->
+            <div class="guna-section">
+                <h3>⭐ गुण मिलन / Guna Matching Score ⭐</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">एकूण गुण / Total Score (out of 36)</label>
+                            <input type="number" name="guna_score" class="form-control" min="0" max="36" placeholder="25" required>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="form-label">सारांश / Summary</label>
+                            <textarea name="summary" class="form-control" rows="4" placeholder="हा कुंडली मिलन अहवाल वैदिक ज्योतिषाच्या अष्टकूट पद्धतीवर आधारित आहे..."></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">जन्म स्थळ / Birth Place</label>
-                <input type="text" name="person2_birth_place" class="form-control" placeholder="नवी दिल्ली, भारत" required>
-            </div>
+            <button type="submit" class="submit-btn">
+                📄 Generate PDF / PDF तयार करा
+            </button>
+        </form>
+    </div>
 
-            <div class="mb-3">
-                <label class="form-label">राशी / Zodiac Sign (Rashi)</label>
-                <select name="person2_rashi" class="form-control" required>
-                    <option value="">Select Rashi</option>
-                    <option value="मेष">मेष (Aries)</option>
-                    <option value="वृषभ">वृषभ (Taurus)</option>
-                    <option value="मिथुन">मिथुन (Gemini)</option>
-                    <option value="कर्क">कर्क (Cancer)</option>
-                    <option value="सिंह">सिंह (Leo)</option>
-                    <option value="कन्या">कन्या (Virgo)</option>
-                    <option value="तुला">तुला (Libra)</option>
-                    <option value="वृश्चिक">वृश्चिक (Scorpio)</option>
-                    <option value="धनु">धनु (Sagittarius)</option>
-                    <option value="मकर">मकर (Capricorn)</option>
-                    <option value="कुंभ">कुंभ (Aquarius)</option>
-                    <option value="मीन">मीन (Pisces)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">नक्षत्र / Nakshatra</label>
-                <input type="text" name="person2_nakshatra" class="form-control" placeholder="अनुराधा" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">चरण / Charan (Pada)</label>
-                <select name="person2_charan" class="form-control" required>
-                    <option value="">Select Charan</option>
-                    <option value="पहिले">पहिले (First)</option>
-                    <option value="दुसरे">दुसरे (Second)</option>
-                    <option value="तिसरे">तिसरे (Third)</option>
-                    <option value="चौथे">चौथे (Fourth)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">वर्ग / Varga (Class)</label>
-                <input type="text" name="person2_varga" class="form-control" placeholder="सर्प" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">योणी / Yoni</label>
-                <input type="text" name="person2_yoni" class="form-control" placeholder="हत्ती" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">नाडी / Nadi</label>
-                <select name="person2_nadi" class="form-control" required>
-                    <option value="">Select Nadi</option>
-                    <option value="आदि">आदि (Adi)</option>
-                    <option value="मध्य">मध्य (Madhya)</option>
-                    <option value="अंत्य">अंत्य (Antya)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">गण / Gan</label>
-                <select name="person2_gan" class="form-control" required>
-                    <option value="">Select Gan</option>
-                    <option value="देव">देव (Dev)</option>
-                    <option value="मनुष्य">मनुष्य (Manushya)</option>
-                    <option value="राक्षस">राक्षस (Rakshasa)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">गुरु / Guru (Jupiter Position)</label>
-                <input type="text" name="person2_guru" class="form-control" placeholder="पहिला" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">मगळ-दोष / Mangal Dosh</label>
-                <select name="person2_mangal_dosh" class="form-control" required>
-                    <option value="">Select</option>
-                    <option value="नाही">नाही (No)</option>
-                    <option value="आहे">आहे (Yes)</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Guna Score Section -->
-        <div class="person-section">
-            <h4 class="section-title">गुण मिलन / Guna Matching Score</h4>
-            
-            <div class="mb-3">
-                <label class="form-label">एकूण गुण / Total Score (out of 36)</label>
-                <input type="number" name="guna_score" class="form-control" min="0" max="36" placeholder="25" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">सारांश / Summary</label>
-                <textarea name="summary" class="form-control" rows="4" placeholder="हा कुंडली मिलन अहवाल वैदिक ज्योतिषाच्या अष्टकूट पद्धतीवर आधारित आहे..."></textarea>
-            </div>
-        </div>
-
-        <button class="btn btn-primary w-100 py-2">Generate PDF / PDF तयार करा</button>
-    </form>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
