@@ -29,6 +29,13 @@ def generate_pdf(request):
             "person1_birth_place": request.POST.get("person1_birth_place"),
             "person1_rashi": request.POST.get("person1_rashi"),
             "person1_nakshatra": request.POST.get("person1_nakshatra"),
+            "person1_charan": request.POST.get("person1_charan"),
+            "person1_varga": request.POST.get("person1_varga"),
+            "person1_yoni": request.POST.get("person1_yoni"),
+            "person1_nadi": request.POST.get("person1_nadi"),
+            "person1_gan": request.POST.get("person1_gan"),
+            "person1_guru": request.POST.get("person1_guru"),
+            "person1_mangal_dosh": request.POST.get("person1_mangal_dosh"),
             
             # Person 2 Details
             "person2_name": request.POST.get("person2_name"),
@@ -37,6 +44,13 @@ def generate_pdf(request):
             "person2_birth_place": request.POST.get("person2_birth_place"),
             "person2_rashi": request.POST.get("person2_rashi"),
             "person2_nakshatra": request.POST.get("person2_nakshatra"),
+            "person2_charan": request.POST.get("person2_charan"),
+            "person2_varga": request.POST.get("person2_varga"),
+            "person2_yoni": request.POST.get("person2_yoni"),
+            "person2_nadi": request.POST.get("person2_nadi"),
+            "person2_gan": request.POST.get("person2_gan"),
+            "person2_guru": request.POST.get("person2_guru"),
+            "person2_mangal_dosh": request.POST.get("person2_mangal_dosh"),
             
             # Guna Matching Score
             "guna_score": request.POST.get("guna_score"),
